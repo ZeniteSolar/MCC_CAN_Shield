@@ -76,15 +76,12 @@ void sweep(void)
         if(control.D < PWM_D_INITIAL){
             control.D += PWM_D_MIN_STEP;
         }else{
-#ifdef ENABLE_SWEEP
             sweep_completed = 1;
-#endif // ENABLE_SWEEP
 #ifndef ENABLE_SOFT_START
             control.D = control.mpp_D;
 #endif // ENABLE_SOFT_START
         }
     }
-#ifdef ENABLE_SWEEP
     if(sweep_completed){
         VERBOSE_MSG_MACHINE(usart_send_string("\n\nGOT MPPT point!\n pi:"));
         VERBOSE_MSG_MACHINE(usart_send_float(control.mpp_pi));
@@ -96,8 +93,6 @@ void sweep(void)
         VERBOSE_MSG_MACHINE(usart_send_float(control.mpp_D)); 
         VERBOSE_MSG_MACHINE(usart_send_char('\n'));
     }
-#endif // ENABLE_SWEEP
-
 #endif // ENABLE_SWEEP
 }
 

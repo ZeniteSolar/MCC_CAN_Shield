@@ -67,7 +67,8 @@ inline void set_machine_initial_state(void)
     control.io[0] = control.io[1] = 0;
     control.po[0] = control.po[1] = 0;
     control.dvi = control.dvo = control.dii = control.dio = control.dpi = 0;
-    control.mpp_vi = control.mpp_ii = control.mpp_pi = control.mpp_D = 0;
+    control.mpp_vi = control.mpp_ii = control.mpp_pi = 0;
+    control.mpp_D = PWM_D_MIN + control.D_step;
 
     machine_clk = machine_clk_divider = led_clk_div = 0;
     something_changed = 0;

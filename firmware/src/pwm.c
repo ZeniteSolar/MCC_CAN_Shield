@@ -92,20 +92,22 @@ void pwm_compute(void)
     #ifdef ENABLE_SOFT_START
 
     if(sweep_completed){
+
         if(!soft_start_completed){
             if(control.D < control.mpp_D){
-                control.D += control.D_step;
+                control.D += PWM_D_STEP;
+                usart_send_string(" , d++, ");
             }else{
                 soft_start_completed = 1;
                 VERBOSE_MSG_MACHINE(usart_send_string("\n>>> SOFT START COMPLETED\n"));
             }
         }else{
             #ifdef ENABLE_PERTURB_AND_OBSERVE
-        perturb_and_observe();
+            perturb_and_observe();
             #endif // ENABLE_PERTURB_AND_OBSERVE
             #ifdef ENABLE_ZERO_POWER_DETECTION
-        zero_power_detection();
-            #endif //ENABLE_ZERO_POWER_DETECTION
+            zero_power_detection();
+            #endif //ENABLE_ZERO_POWER_DETECTION 
         }
     }else{
         sweep();
@@ -133,7 +135,7 @@ void pwm_compute(void)
     #ifdef ENABLE_SOFT_START
     if(!soft_start_completed){
         if(control.D < PWM_D_NOMINAL){
-            control.D += control.D_step;
+            control.D += PWM_D_STEP;
         }else{
             soft_start_completed = 1;
             VERBOSE_MSG_MACHINE(usart_send_string("\n>>> SOFT START COMPLETED\n"));

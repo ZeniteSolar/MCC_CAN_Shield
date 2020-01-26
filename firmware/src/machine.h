@@ -72,7 +72,6 @@ typedef struct control{
     float   ii[2];          // value of panel current in AMPS
 	float	vo[2];		    // value of battery voltage in VOLTS
     float   io[2];          // value of battery current in AMPS
-	float	dvi;		    // value of delta panel voltage in VOLTS
 	float	dii;		    // value of delta panel current in AMPS
 	float	dvo;		    // value of delta battery voltage in VOLTS
 	float	dio;		    // value of delta battery current in AMPS
