@@ -237,17 +237,18 @@ void print_infos(void)
 
     switch(i++){
         case 0:
-            //print_system_flags();
             usart_send_string("\nvi: ");
             usart_send_float(vi);
+            usart_send_char('/');
+            usart_send_float(vi_setpoint);
             break;
         case 1:
-            //print_error_flags();
             usart_send_string(" , ii: ");
             usart_send_float(ii);
+            usart_send_char('/');
+            usart_send_float(ii_setpoint);
             break;
         case 2:
-            //print_control_others(); 
             usart_send_string(" , vo: ");
             usart_send_float(vo); 
             break;
@@ -255,29 +256,20 @@ void print_infos(void)
             usart_send_string(" , dt: ");
             usart_send_float(dt);
             usart_send_char(',');
-            usart_send_char(dt_min);
+            usart_send_char(control_flags.updown + '0');
             break;
-/*        case 4:
-            usart_send_string(" , dtsr: ");
-            usart_send_char(control_flags.dt_safe_range + '0');
+        case 4:
+            usart_send_string(", pi: ");
+            usart_send_float(pi);
+            usart_send_char('/');
+            usart_send_float(pi_setpoint);
+            usart_send_char(',');
             break;
         case 5:
-            usart_send_string(" , vosr: ");
-            usart_send_char(control_flags.vo_safe_range + '0');
+            usart_send_float(control_flags.u_step);
+            usart_send_char(',');
             break;
-        case 6:
-            usart_send_string(" , visr: ");
-            usart_send_char(control_flags.vi_safe_range + '0');
-            break;
-        case 7:
-            usart_send_string(" , vist: ");
-            usart_send_char(control_flags.vi_stable + '0');
-            break;
-*/
         default:
-            //VERBOSE_MSG_MACHINE(usart_send_char('\n'));
-//            usart_send_string(" , en: ");
-//            usart_send_char(control_flags.enable+'0');
             i = 0;
             break;
     }
