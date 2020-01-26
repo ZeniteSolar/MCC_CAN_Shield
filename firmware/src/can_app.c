@@ -60,7 +60,7 @@ inline void can_app_send_state(void)
     msg.data[CAN_MSG_GENERIC_STATE_SIGNATURE_BYTE]            = CAN_SIGNATURE_SELF;
     msg.data[CAN_MSG_GENERIC_STATE_STATE_BYTE]      = (uint8_t) state_machine;
     msg.data[CAN_MSG_GENERIC_STATE_ERROR_BYTE]      = error_flags.all;
-    msg.data[CAN_MSG_MCB19_1_STATE_CONTROL_BYTE]    = control_flags.all;
+    //msg.data[CAN_MSG_MCB19_1_STATE_CONTROL_BYTE]    = control_flags.all;
 
     can_send_message(&msg);
 #ifdef VERBOSE_MSG_CAN_APP

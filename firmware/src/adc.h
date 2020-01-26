@@ -17,10 +17,10 @@
 #include "dbg_vrb.h"
 #include "usart.h"
 #include "../lib/bit_utils.h"
-#include "control.h"
+#include "pwm.h"
 
 typedef enum {ADC0, ADC1, ADC2} adc_channels_t;
-volatile uint8_t print_adc;
+volatile uint8_t adc_ready;
 
 void adc_init(void);
 

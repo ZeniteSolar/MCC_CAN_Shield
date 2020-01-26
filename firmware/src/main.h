@@ -51,12 +51,12 @@
 #pragma message "MACHINE: OFF!"
 #endif /*ifdef MACHINE_ON*/
 
-#ifdef CONTROL_ON
-#include "control.h"
-#pragma message "CONTROL: ON!"
+#ifdef PWM_ON
+//#include "pwm.h"
+#pragma message "PWM: ON!"
 #else
-#pragma message "CONTROL: OFF!"
-#endif /*ifdef CONTROL_ON*/
+#pragma message "PWM: OFF!"
+#endif /*ifdef PWM_ON*/
 
 #ifdef LED_ON
 #pragma message "LED: ON!"

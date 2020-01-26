@@ -77,6 +77,7 @@ ISR(ADC_vect)
     static const float vi_coeff = 0.04758996778626111f;
     static const float vo_coeff = 0.06301157417195635f;
     static const float ii_coeff = 0.016410700405343048f;
+    static uint16_t pwm_compute_clock_divider = 0;
 
     uint16_t adc = ADC;                     // read adc
     uint8_t channel = ADMUX & 0x07;         // read channel
@@ -91,22 +92,25 @@ ISR(ADC_vect)
 
     switch(channel){
         case ADC0:
-            vi = adc * vi_coeff;
+            control.vi[0] = adc * vi_coeff;
             break;
 
         case ADC1:                       
-            ii = adc * ii_coeff;
+            control.ii[0] = adc * ii_coeff;
             break;
 
         case ADC2: default:
-            vo = adc * vo_coeff;
+            control.vo[0] = adc * vo_coeff;
             channel = 255;             // recycle
 
-            print_adc = 1;
+            adc_ready = 1;
 //#ifdef DEBUG_ON
 //            set_bit(PORTD, PD5);
 //#endif
-            control(); // call control action 
+            if(++pwm_compute_clock_divider > 20){
+                pwm_compute_clock_divider = 0;
+                pwm_compute(); // call control action 
+            }
 //#ifdef DEBUG_ON
 //            clr_bit(PORTD, PD5);
 //#endif  
