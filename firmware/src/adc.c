@@ -107,6 +107,9 @@ ISR(ADC_vect)
 //#ifdef DEBUG_ON
 //            set_bit(PORTD, PD5);
 //#endif
+
+            compute_measurements();
+
             if(++pwm_compute_clock_divider > 20){
                 pwm_compute_clock_divider = 0;
                 pwm_compute(); // call control action 

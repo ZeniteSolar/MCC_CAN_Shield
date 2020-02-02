@@ -42,6 +42,45 @@ void machine_init(void)
     set_state_initializing();
 } 
 
+inline void reset_measurements(void)
+{
+    measurements.vo_avg_sum_count = measurements.vo_avg_sum = 0;
+	measurements.ii_avg_sum_count = measurements.ii_avg_sum = 0;
+    measurements.vi_avg_sum_count = measurements.vi_avg_sum = 0;
+}
+
+inline void compute_measurements(void)
+{
+	measurements.vo_avg_sum_count++;
+	measurements.vo_avg_sum += 100 * control.vo[0];
+
+	measurements.ii_avg_sum_count++;
+	measurements.ii_avg_sum += 1000 * control.ii[0];
+
+	measurements.vi_avg_sum_count++;
+	measurements.vi_avg_sum += 100 * control.vi[0];
+
+    measurements.dt = 100 * control.D;
+}
+
+inline void compute_averages(void)
+{
+    if(measurements.vo_avg_sum_count){
+        measurements.vo_avg =
+            (measurements.vo_avg_sum / measurements.vo_avg_sum_count);
+    }
+
+    if(measurements.ii_avg_sum_count){
+        measurements.ii_avg =
+            (measurements.ii_avg_sum / measurements.ii_avg_sum_count);
+    }
+
+    if(measurements.vi_avg_sum_count){
+        measurements.vi_avg =
+            (measurements.vi_avg_sum / measurements.vi_avg_sum_count);
+    }
+}
+
 /**
  * @brief set machine initial state
  */
@@ -612,7 +651,7 @@ inline void print_control_dpi(void)
 inline void task_initializing(void)
 {
 #ifdef LED_ON
-    set_led();
+    set_led(LED1);
 #endif
 #ifdef PWM_ON
     pwm_reset();
@@ -631,12 +670,16 @@ inline void task_initializing(void)
 inline void task_idle(void)
 {
 #ifdef LED_ON
-    if(led_clk_div++ >= 50){
-        cpl_led();
-        led_clk_div = 0;
-    }        
+        if(control.D_step > 0){
+            set_led(LED1); 
+            clr_led(LED2);
+        }
+        else{
+            set_led(LED2);
+            clr_led(LED1);
+        }
 #endif
-
+ 
 #ifdef PWM_ON
 
     if(system_flags.mppt_on && system_flags.enable){
@@ -653,20 +696,19 @@ inline void task_idle(void)
  */
 inline void task_running(void)
 {
-#ifdef LED_ON
-    if(led_clk_div++ >= 10){
-        cpl_led();
-        led_clk_div = 0;
-    }
-#endif // LED_ON
 
     if(system_flags.mppt_on && system_flags.enable){
-#ifdef PWM_ON
-
-//    pwm_compute();
-
-#endif //PWM_ON
-
+#ifdef LED_ON
+        if(control.D_step > 0){
+            set_led(LED1); 
+            clr_led(LED2);
+        }
+        else{
+            set_led(LED2);
+            clr_led(LED1);
+        }
+#endif
+    
     }else{
         set_state_idle();
     }
@@ -680,7 +722,7 @@ inline void task_error(void)
 {
 #ifdef LED_ON
     if(led_clk_div++ >= 5){
-        cpl_led();
+        cpl_led(LED1);
         led_clk_div = 0;
     }
 #endif
@@ -716,7 +758,7 @@ inline void task_error(void)
     }
     
 #ifdef LED_ON
-    cpl_led();
+    cpl_led(LED2);
 #endif
     set_state_initializing();
 }

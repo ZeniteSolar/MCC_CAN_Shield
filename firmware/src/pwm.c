@@ -72,6 +72,18 @@ inline void zero_power_detection(void)
  */
 void pwm_compute(void)
 {	
+static uint8_t i=0;
+
+if(i <= 0)
+{
+            i++;
+            soft_start_completed = 0;
+            sweep_completed = 0;
+            sweep_periods = (PERIODS_TO_SWEEP -1);
+            sweep_last_up = 0;
+            sweep_updown = 0;
+}
+
 #ifdef MACHINE_ON
     // Compute derivates
     control.pi[0] = control.vi[0] * control.ii[0];

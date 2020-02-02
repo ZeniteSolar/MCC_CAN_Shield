@@ -8,7 +8,7 @@
  */
 
 #ifndef CONF_H
-#define CONF_H
+//#define CONF_H
 
 #ifndef F_CPU
 #define F_CPU 16000000UL    //define a frequencia do microcontrolador - 16MHz
@@ -17,7 +17,7 @@
 
 // CONFIGURACOES DE COMPILACAO
 //#define DEBUG_ON
-//#define VERBOSE_ON
+#define VERBOSE_ON
 //#define VERBOSE_ON_CAN_APP
 #define VERBOSE_ON_MACHINE
 //#define VERBOSE_ON_ADC
@@ -28,7 +28,7 @@
 
 // MODULES ACTIVATION
 #define USART_ON
-//#define CAN_ON
+#define CAN_ON
 //#define CAN_DEPENDENT
 #define ADC_ON
 #define MACHINE_ON
@@ -37,11 +37,12 @@
 #define WATCHDOG_ON
 //#define SLEEP_ON
 
-#define CAN_SIGNATURE_SELF CAN_SIGNATURE_MCC19_1
+
+// CAN DEFINITIONS
+#define CAN_SIGNATURE_SELF CAN_SIGNATURE_MCC19_3
 
 
 // PWM DEFINITIONS
-#ifdef PWM_ON
 // WARNING: DEFINITIONS FOR TEST THE CONVERTER WITH FIXED DUTY CYCLE!!!
 //#define CONVERTER_TEST_WITH_FIXED_DUTYCYCLE
 //#define CONVERTER_TEST_WITH_FIXED_DUTYCYCLE_DT_VALUE 0.6f
@@ -55,13 +56,11 @@
 #define PWM_D_STEP 					        0.0125f
 #define PWM_D_MIN_STEP				        1*PWM_D_STEP
 #define PWM_D_MAX_STEP				        4*PWM_D_STEP
-#endif // PWM_ON
 
 #define PERIOD      0.0009960853844391542f
 #define D_MIN       0
 #define D_MAX       0.9
 
-#ifdef MACHINE_ON
 // The machine frequency may not be superior of ADC_FREQUENCY/ADC_AVG_SIZE_10
 #define MACHINE_TIMER_FREQUENCY             120           //<! machine timer frequency in Hz
 #define MACHINE_TIMER_PRESCALER             1024          //<! machine timer prescaler
@@ -191,18 +190,21 @@
 #define     LED_DDR                 DDRD
 #define     LED1                    PD5
 #define     LED2                    PD6
-#define     cpl_led()               cpl_bit(LED_PORT, LED1)
-#define     set_led()               set_bit(LED_PORT, LED1)
-#define     clr_led()               clr_bit(LED_PORT, LED1)
+#define     cpl_led(x)               cpl_bit(LED_PORT, x)
+#define     set_led(x)               set_bit(LED_PORT, x)
+#define     clr_led(x)               clr_bit(LED_PORT, x)
+
 #else
 #define     cpl_led()               
 #define     set_led()               
 #define     clr_led()               
 #endif // LED_ON
 
-#endif // MACHINE_ON
 
 #ifdef CAN_ON
+#define SPI_ON
+#define CAN_APP_SEND_STATE_FREQ             12000
+#define CAN_APP_SEND_MEASUREMENTS_FREQ      120
 // CANBUS DEFINITONS
 // ----------------------------------------------------------------------------
 /* Global settings for building the can-lib and application program.

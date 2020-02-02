@@ -20,9 +20,7 @@
 // Note the resolution. For example.. at 150hz, ICR1 = PWM_TOP = 159, so it
 #define MACHINE_TIMER_TOP ((F_CPU/(2*MACHINE_TIMER_PRESCALER))/(MACHINE_TIMER_FREQUENCY) -1)
 
-#ifdef ADC_ON
 #include "adc.h"
-#endif
 #ifdef USART_ON
 #include "usart.h"
 #endif
@@ -73,6 +71,7 @@ typedef struct control{
 	float	vo[2];		    // value of battery voltage in VOLTS
     float   io[2];          // value of battery current in AMPS
 	float	dii;		    // value of delta panel current in AMPS
+	float	dvi;		    // value of delta panel current in AMPS
 	float	dvo;		    // value of delta battery voltage in VOLTS
 	float	dio;		    // value of delta battery current in AMPS
     float   mpp_vi;         // value of panel voltage at MPP
@@ -98,6 +97,10 @@ typedef struct measurements{
 }measurements_t;
 
 measurements_t measurements;
+
+void reset_measurements(void);
+void compute_measurements(void);
+void compute_averages(void);
 
 // machine checks
 void read_and_check_adcs(void);
