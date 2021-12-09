@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/c,linux
 
+src/can_ids.h
+
 ### C ###
 # Prerequisites
 *.d
