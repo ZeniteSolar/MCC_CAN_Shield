@@ -1,7 +1,21 @@
 /*
  * mppt.c
- */ 
+ */
 #include "mppt.h"
+
+#ifdef ENABLE_ZERO_POWER_DETECTION
+uint8_t zero_power_detection_counter;
+#endif // ENABLE_ZERO_POWER_DETECTION
+
+#ifdef ENABLE_SWEEP
+uint8_t sweep_completed;
+uint8_t sweep_last_up;
+uint8_t sweep_updown;
+#endif // ENABLE_SWEEP
+
+#ifdef ENABLE_SOFT_START
+uint8_t soft_start_completed;
+#endif // ENABLE_SOFT_START
 
 /**
  * @brief tries to limit input power to safe levels varying duty cycle against
@@ -38,7 +52,7 @@ inline void battery_voltage_limit(void)
  * doi:10.1016/j.apenergy.2015.04.006
  */
 inline void perturb_and_observe(void)
-{   
+{
     if(control.dpi <= 0)    control.D_step = -control.D_step;
     control.D += control.D_step;
 }

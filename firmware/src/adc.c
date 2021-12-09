@@ -1,5 +1,7 @@
 #include "adc.h"
 
+volatile uint8_t adc_ready;
+
 //#define ADC_8BITS
 #define ADC_TIMER_PRESCALER 64
 /**

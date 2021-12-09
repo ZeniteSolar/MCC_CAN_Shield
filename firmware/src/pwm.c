@@ -1,5 +1,12 @@
 #include "pwm.h"
 
+#ifdef ENABLE_SWEEP
+uint8_t sweep_periods;
+#endif // ENABLE_SWEEP
+
+// // pwm variables
+uint8_t pwm_d_clk_div;
+
 /**
  * @brief configura o PWM usando o timer TC1
  */

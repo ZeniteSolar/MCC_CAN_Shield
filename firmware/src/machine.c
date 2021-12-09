@@ -1,5 +1,20 @@
 #include "machine.h"
 
+measurements_t measurements;
+
+// machine variables
+volatile state_machine_t state_machine;
+volatile system_flags_t system_flags;
+volatile error_flags_t error_flags;
+volatile control_t control;
+volatile uint8_t machine_clk;
+volatile uint8_t machine_clk_divider;
+volatile uint8_t something_changed;
+volatile uint8_t total_errors;           // Contagem de ERROS
+
+// other variables
+volatile uint8_t led_clk_div;
+
 /**
  * @brief 
  */

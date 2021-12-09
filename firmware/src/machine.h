@@ -96,7 +96,7 @@ typedef struct measurements{
     uint8_t     dt;
 }measurements_t;
 
-measurements_t measurements;
+extern measurements_t measurements;
 
 void reset_measurements(void);
 void compute_measurements(void);
@@ -153,17 +153,17 @@ void set_state_running(void);
 void set_state_reset(void);
 
 // machine variables
-volatile state_machine_t state_machine;
-volatile system_flags_t system_flags;
-volatile error_flags_t error_flags;
-volatile control_t control;
-volatile uint8_t machine_clk;
-volatile uint8_t machine_clk_divider;
-volatile uint8_t something_changed;
-volatile uint8_t total_errors;           // Contagem de ERROS
+extern volatile state_machine_t state_machine;
+extern volatile system_flags_t system_flags;
+extern volatile error_flags_t error_flags;
+extern volatile control_t control;
+extern volatile uint8_t machine_clk;
+extern volatile uint8_t machine_clk_divider;
+extern volatile uint8_t something_changed;
+extern volatile uint8_t total_errors;           // Contagem de ERROS
 
 // other variables
-volatile uint8_t led_clk_div;
+extern volatile uint8_t led_clk_div;
 
 // ISRs
 ISR(TIMER2_COMPA_vect);
