@@ -53,8 +53,27 @@ inline void battery_voltage_limit(void)
  */
 inline void perturb_and_observe(void)
 {
-    if(control.dpi <= 0)    control.D_step = -control.D_step;
-    control.D += control.D_step;
+
+    if (control.pi[0] < RUNNING_PANEL_POWER_MAX && control.pi[1] < RUNNING_PANEL_POWER_MAX)
+    {
+
+        if (control.dpi <= 0)
+        {
+            control.D_step = -control.D_step;
+        }
+        control.D += control.D_step;
+    }
+    else
+    {
+        usart_send_string("Power Limit:");
+        
+        usart_send_float(control.vi[0]);
+        if (control.dpi >= 0)
+        {
+            control.D_step = -control.D_step;
+        }
+        control.D += 1.01 * control.D_step;
+    }
 }
 
 /**

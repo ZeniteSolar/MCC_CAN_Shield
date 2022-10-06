@@ -112,7 +112,8 @@ ISR(ADC_vect)
 
             compute_measurements();
 
-            if(++pwm_compute_clock_divider > 20){
+
+            if(++pwm_compute_clock_divider > 40){
                 pwm_compute_clock_divider = 0;
                 pwm_compute(); // call control action 
             }
