@@ -53,7 +53,7 @@ inline void pwm_reset(void)
 inline void zero_power_detection(void)
 {
 #ifdef ENABLE_ZERO_POWER_DETECTION
-    if(control.pi[0] < RUNNING_PANEL_POWER_MIN){
+    if(control.pi[0] < RUNNING_PANEL_POWER_MIN || control.ii[0] < RUNNING_PANEL_CURRENT_MIN){
         if(++zero_power_detection_counter > ZERO_POWER_DETECTION_THRESHOLD){
             zero_power_detection_counter = 0;
 #ifdef ENABLE_SWEEP
