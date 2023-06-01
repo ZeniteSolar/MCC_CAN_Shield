@@ -62,10 +62,9 @@
 #define D_MAX       0.9
 
 // The machine frequency may not be superior of ADC_FREQUENCY/ADC_AVG_SIZE_10
-#define MACHINE_TIMER_FREQUENCY             120           //<! machine timer frequency in Hz
-#define MACHINE_TIMER_PRESCALER             1024          //<! machine timer prescaler
-#define MACHINE_FREQUENCY                   100           //<! machine frequency in Hz
-#define MACHINE_CLK_DIVIDER_VALUE           (MACHINE_TIMER_FREQUENCY)/(MACHINE_FREQUENCY)  //<! machine_run clock divider
+#define MACHINE_TIMER_FREQUENCY 120UL  //<! machine timer frequency in Hz
+#define MACHINE_TIMER_PRESCALER 1024UL //<! machine timer prescaler
+#define MACHINE_FREQUENCY MACHINE_TIMER_FREQUENCY
 
 #define XSTR(x) STR(x)
 #define STR(x) #x
@@ -203,8 +202,6 @@
 
 #ifdef CAN_ON
 #define SPI_ON
-#define CAN_APP_SEND_STATE_FREQ             12000
-#define CAN_APP_SEND_MEASUREMENTS_FREQ      120
 // CANBUS DEFINITONS
 // ----------------------------------------------------------------------------
 /* Global settings for building the can-lib and application program.
